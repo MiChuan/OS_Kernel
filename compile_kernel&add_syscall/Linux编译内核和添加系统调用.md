@@ -126,7 +126,7 @@ asmlinkage long sys_mycopy(const char __user *target, const char __user *source)
 
 ## 测试代码目录说明
 
-**开源地址**：
+**开源地址**：[OS_Kernel/compile_kernel&add_syscall](https://github.com/MiChuan/OS_Kernel/tree/master/compile_kernel%26add_syscall)
 
 > compile_kernel&add_syscall    编译内核和添加系统调用代码目录
 >
