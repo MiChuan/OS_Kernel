@@ -142,7 +142,7 @@ asmlinkage long sys_mycopy(const char __user *target, const char __user *source)
 > > >
 > > > test_copy       编译生成的二进制程序
 > >
-> > ReadMe.txt        内核空间访问说明
+> > example.c          内核空间访问说明示例程序
 > >
 > > syscall_64.tbl     系统调用表
 > >

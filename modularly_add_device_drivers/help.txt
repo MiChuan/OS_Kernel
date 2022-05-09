@@ -1,0 +1,123 @@
+/*****************Makefile与make命令*************************/
+https://blog.csdn.net/afei__/article/details/82696682
+1. 语法规则
+/*******************
+目标...: 依赖...
+    命令1
+    命令2
+    ...
+******************/
+
+示例:
+ALL: hello.out
+ 
+hello.out: hello.c
+    gcc hello.c -o hello.out
+
+2. 2个函数
+1) wildcard
+
+例如
+
+SRC = $(wildcard ./*.c)
+
+匹配目录下所有的 .c 文件，并将其赋值给 SRC 变量。
+
+2) patsubst
+
+pat 是 pattern 的缩写，subst 是 substring 的缩写。例如
+
+OBJ = $(patsubst %.c, %.o, $(SRC))
+
+这个函数有三个参数，意思是取出 SRC 中所有的值，然后将 “.c” 替换为 “.o”，最后赋值给 OBJ 变量。
+
+3) 示例
+
+通过上面两个函数，加入我们目录下有很多个 “.c” 后缀的源文件，就不需要写很多条规则语句了，而是可以像下面这样写
+
+    SRC = $(wildcard *.c)
+    OBJ = $(patsubst %.c, %.o, $(SRC))
+     
+    ALL: hello.out
+     
+    hello.out: $(OBJ)
+            gcc $(OBJ) -o hello.out
+     
+    $(OBJ): $(SRC)
+            gcc -c $(SRC) -o $(OBJ)
+
+这里我们先将所有的 “.c” 文件编译为 “.o” 文件，这样后面更改某个 “.c” 文件时，其它的 “.c” 文件将不再编译，而只是编译有更改的 “.c” 文件，可以大大节约大项目中的编译速度。
+
+3.3个变量
+
+Makefile 中也有一些已经定义好的常用变量，这里介绍其中常用的3个。
+
+1) $@
+
+表示规则中目标，例如 hello.out。
+
+2) $<
+
+表示规则中的第一个依赖条件，例如 hello.c
+
+3) $^
+
+表示规则中的所有依赖条件，由于我们示例中都只有一个依赖条件，这种情况下 $^ 和 $< 区别不大。
+
+4) 示例
+
+使用这些变量替换上面写的 Makefile，即是：
+
+    SRC = $(wildcard *.c)
+    OBJ = $(patsubst %.c, %.o, $(SRC))
+     
+    ALL: hello.out
+     
+    hello.out: $(OBJ)
+            gcc $< -o $@
+     
+    $(OBJ): $(SRC)
+            gcc -c $< -o $@
+
+4. 代码清理 clean
+
+我们可以编译一条属于自己的 clean 语句，来清理 make 命令所产生的所有文件。例如
+
+    SRC = $(wildcard *.c)
+    OBJ = $(patsubst %.c, %.o, $(SRC))
+     
+    ALL: hello.out
+     
+    hello.out: $(OBJ)
+            gcc $< -o $@
+     
+    $(OBJ): $(SRC)
+            gcc -c $< -o $@
+     
+    clean:
+            -rm -rf $(OBJ) hello.out
+
+这样我们就可以使用 clean 命令来清理生成的文件了：
+
+    $ ls
+    hello.c  hello.o  hello.out  Makefile
+    $ make clean
+    rm -rf  hello.o hello.out
+    $ ls
+    hello.c  Makefile
+    
+/**************模块加载与卸载*****************/
+1 将设备驱动源文件复制到/usr/src/linux-4.14.141/drivers/misc/mydev下
+2 修改misc目录下的Makefile文件,只要修改一句即可:
+    obj-m +=mydev.o
+3 在/usr/src/linux-4.14.141/drivers/misc/mydev路径下执行命令进行编译,成功将得到mydev.ko文件
+    Make -C /usr/src/linux SUBDIRS=$PWD modules
+4 挂载内核中的模块
+    insmod ./mydev.ko
+5 通过lsmod命令可以看到增加的设备模块mydev
+6 进入/proc/devices文件会看到在字符设备中有241 mydev。前面的是系统分配的主设备号，后面是设备注册名
+7 在/dev路径下，执行命令：
+    mknod /dev/mydev c 241 0
+8 执行成功会在/dev/char中看到一个新的设备文件mydev
+9 编译测试程序,执行并测试
+
