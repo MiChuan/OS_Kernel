@@ -2,4 +2,8 @@
 
 ## [Linux内核编译和添加系统调用](https://github.com/MiChuan/OS_Kernel/tree/master/compile_kernel%26add_syscall)
 
+- 采用编译内核的方法，添加一个新的系统调用，实现文件拷贝功能
+
+- 编写一个应用程序，测试新加的系统调用
+
 ## Linux添加设备驱动程序
