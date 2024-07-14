@@ -1,9 +1,5 @@
 # Linux模块化增加设备驱动程序
 
-## 目录
-
-[toc]
-
 ## 目的
 
 1. 采用模块方法，添加一个新的字符设备驱动程序，实现打开/关闭、读/写等基本操作
@@ -109,23 +105,23 @@ MODULE_LICENSE("GPL");
 
 1. 使用`Makefile文件`**编译**设备驱动模块
 
-![编译设备驱动模块](http://mi_chuan.gitee.io/blog/编译设备驱动模块.png)
+![编译设备驱动模块](https://img-blog.csdnimg.cn/img_convert/d0d1ca1439c750c58fc24280f1ff26cb.png)
 
 2. 执行`insmod mydev.ko`，**加载设备驱动模块**
 
-![加载设备驱动模块](http://mi_chuan.gitee.io/blog/加载设备驱动模块.png)
+![加载设备驱动模块](https://img-blog.csdnimg.cn/img_convert/7776d2be54a115806c51b1592b34ee83.png)
 
 3. 通过`cat /proc/devices`命令查看新增**设备名mydev**和**主设备号**
 
-![查看设备驱动模块设备号](http://mi_chuan.gitee.io/blog/查看设备驱动模块设备号.png)
+![查看设备驱动模块设备号](https://img-blog.csdnimg.cn/img_convert/c9508a7a69499e95ec1ecfe82beb50c3.png)
 
 4. 执行命令`mknod /dev/mydev c 241 0`，生成**设备文件**，查看设备文件
 
-![生成设备文件](http://mi_chuan.gitee.io/blog/生成设备文件.png)
+![生成设备文件](https://img-blog.csdnimg.cn/img_convert/0646a11df5eabd6391a2ede4848be806.png)
 
 5. 编译**测试程序**，执行并进行测试
 
-![编译运行测试程序](http://mi_chuan.gitee.io/blog/编译运行测试程序.png)
+![编译运行测试程序](https://img-blog.csdnimg.cn/img_convert/df3e4c052270b748ee235bd8be65a497.png)
 
 ## 测试代码目录说明
 
