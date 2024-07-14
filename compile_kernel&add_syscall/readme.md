@@ -1,7 +1,5 @@
 # Linux编译内核和添加系统调用
 
-[toc]
-
 ## 目的
 
 1. 采用编译内核的方法，添加一个新的系统调用，实现文件拷贝功能
@@ -118,11 +116,11 @@ asmlinkage long sys_mycopy(const char __user *target, const char __user *source)
 
 1. 使用uname -r命令查看当前系统内核版本
 
-   ![查看内核版本](http://mi_chuan.gitee.io/blog/查看内核版本.png)
+   ![查看内核版本](https://img-blog.csdnimg.cn/img_convert/3fbf587909a483afbbb24f99273ad9ea.png)
 
 2. gcc编译测试程序并运行
 
-   ![测试系统调用](http://mi_chuan.gitee.io/blog/测试系统调用.png)
+   ![测试系统调用](https://img-blog.csdnimg.cn/img_convert/a9663194cf0fc65a81603119a2228fd6.png)
 
 ## 测试代码目录说明
 
